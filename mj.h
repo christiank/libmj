@@ -1,5 +1,6 @@
 /*-
  * Copyright (c) 2010,2011 Alistair Crooks <agc@NetBSD.org>
+ * Copyright (c) 2014 Christian Koch <cfkoch@sdf.lonestar.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,7 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #ifndef MJ_H_
-#define MJ_H_	20110607
+#define MJ_H_	20140914
 
 enum {
 	MJ_NULL		= 1,
@@ -40,40 +41,39 @@ enum {
 	MJ_JSON_ENCODE	= 1	/* encoded JSON */
 };
 
-/* a minimalist JSON node */
+/*
+ * A minimalist JSON node.
+ */
 typedef struct mj_t {
-	unsigned	type;		/* type of JSON node */
-	unsigned	c;		/* # of chars */
-	unsigned	size;		/* size of array */
+	unsigned type;	/* type of JSON node */
+	unsigned c;		/* # of chars */
+	unsigned size;	/* size of array */
 	union {
-		struct mj_t	*v;	/* sub-objects */
-		char		*s;	/* string value */
+		struct mj_t *v;	/* sub-objects */
+		char *s;	/* string value */
 	} value;
 } mj_t;
 
-/* creation and deletion */
-int mj_create(mj_t */*atom*/, const char */*type*/, .../*value*/);
-int mj_parse(mj_t */*atom*/, const char */*s*/, int */*from*/,
-		int */*to*/, int */*token*/);
-int mj_append(mj_t */*atom*/, const char */*type*/, .../*value*/);
-int mj_append_field(mj_t */*atom*/, const char */*name*/, const char */*type*/,
-		.../*value*/);
-int mj_deepcopy(mj_t */*dst*/, mj_t */*src*/);
-void mj_delete(mj_t */*atom*/);
+/* Creation and deletion. */
+int mj_create(mj_t *atom, const char *type, ...);
+int mj_parse(mj_t *atom, const char *s, int *from, int *to, int *token);
+int mj_append(mj_t *atom, const char *type, ...);
+int mj_append_field(mj_t *atom, const char *name, const char *type, ...);
+int mj_deepcopy(mj_t *dst, mj_t *src);
+void mj_delete(mj_t *atom);
 
-/* JSON object access */
-int mj_arraycount(mj_t */*atom*/);
-int mj_object_find(mj_t */*atom*/, const char */*name*/,
-		const unsigned /*from*/, const unsigned /*incr*/);
-mj_t *mj_get_atom(mj_t */*atom*/, ...);
-int mj_lint(mj_t */*atom*/);
+/* JSON object access. */
+int mj_arraycount(mj_t *atom);
+int mj_object_find(mj_t *atom, const char *name, const unsigned from,
+	const unsigned incr);
+mj_t *mj_get_atom(mj_t *atom, ...);
+int mj_lint(mj_t *atom);
 
-/* textual output */
-int mj_snprint(char */*buf*/, size_t /*size*/, mj_t */*atom*/, int /*encoded*/);
-int mj_asprint(char **/*bufp*/, mj_t */*atom*/, int /*encoded*/);
-int mj_string_size(mj_t */*atom*/);
-int mj_pretty(mj_t */*atom*/, void */*fp*/, unsigned /*depth*/,
-		const char */*trailer*/);
-const char *mj_string_rep(mj_t */*atom*/);
+/* Textual output. */
+int mj_snprint(char *buf, size_t size, mj_t *atom, int encoded);
+int mj_asprint(char **bufp, mj_t *atom, int encoded);
+int mj_string_size(mj_t *atom);
+int mj_pretty(mj_t *atom, void *fp, unsigned depth, const char *trailer);
+const char *mj_string_rep(mj_t *atom);
 
-#endif
+#endif /* MJ_H_ */
