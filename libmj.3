@@ -76,11 +76,11 @@ Access to objects and array entries is made using the following functions:
 JSON object output functions:
 .Ft int
 .Fo mj_snprint
-.Fa "char *buffer" "size_t size" "mj_t *atom"
+.Fa "char *buffer" "size_t size" "mj_t *atom" "int encoded"
 .Fc
 .Ft int
 .Fo mj_asprint
-.Fa "char **buffer" "mj_t *atom"
+.Fa "char **buffer" "mj_t *atom" "int encoded"
 .Fc
 .Ft int
 .Fo mj_string_size
