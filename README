@@ -1,0 +1,5 @@
+== libmj ==
+
+This repository contains improvements to libmj, the minimalist JSON library
+originally written by Alistair Crooks. The goal here is to make the
+interface a tad more convenient.
