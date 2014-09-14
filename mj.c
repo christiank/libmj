@@ -1,5 +1,6 @@
 /*-
  * Copyright (c) 2010 Alistair Crooks <agc@NetBSD.org>
+ * Copyright (c) 2014 Christian Koch <cfkoch@sdf.lonestar.org>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,9 +36,19 @@
 #include "mj.h"
 #include "defs.h"
 
+static char *strnsave(const char *, int, unsigned int);
+static int findentry(mj_t *, const char *, const unsigned int,
+  const unsigned int);
+static void create_number(mj_t *, double);
+static void create_integer(mj_t *, int64_t);
+static void create_string(mj_t *, const char *, ssize_t);
+static int gettok(const char *, int *, int *, int *);
+static void indent(FILE *, unsigned int, const char *);
+
+
 /* save 'n' chars of 's' in malloc'd memory */
 static char *
-strnsave(const char *s, int n, unsigned encoded)
+strnsave(const char *s, int n, unsigned int encoded)
 {
 	char	*newc;
 	char	*cp;
@@ -76,7 +87,8 @@ strnsave(const char *s, int n, unsigned encoded)
 
 /* look in an object for the item */
 static int
-findentry(mj_t *atom, const char *name, const unsigned from, const unsigned incr)
+findentry(mj_t *atom, const char *name, const unsigned int from,
+  const unsigned int incr)
 {
 	unsigned	i;
 
@@ -163,7 +175,7 @@ gettok(const char *s, int *from, int *to, int *tok)
 
 /* minor function used to indent a JSON field */
 static void
-indent(FILE *fp, unsigned depth, const char *trailer)
+indent(FILE *fp, unsigned int depth, const char *trailer)
 {
 	unsigned	i;
 
