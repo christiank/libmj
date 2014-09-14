@@ -46,7 +46,9 @@ static int gettok(const char *, int *, int *, int *);
 static void indent(FILE *, unsigned int, const char *);
 
 
-/* save 'n' chars of 's' in malloc'd memory */
+/*
+ * Save 'n' chars of 's' in malloc'd memory.
+ */
 static char *
 strnsave(const char *s, int n, unsigned int encoded)
 {
@@ -85,7 +87,9 @@ strnsave(const char *s, int n, unsigned int encoded)
 	return cp;
 }
 
-/* look in an object for the item */
+/*
+ * Look in an object for the item.
+ */
 static int
 findentry(mj_t *atom, const char *name, const unsigned int from,
   const unsigned int incr)
@@ -100,7 +104,9 @@ findentry(mj_t *atom, const char *name, const unsigned int from,
 	return -1;
 }
 
-/* create a real number */
+/*
+ * Create a real number.
+ */
 static void
 create_number(mj_t *atom, double d)
 {
@@ -111,7 +117,9 @@ create_number(mj_t *atom, double d)
 	atom->value.s = strnsave(number, (int)atom->c, MJ_HUMAN);
 }
 
-/* create an integer */
+/*
+ * Create an integer.
+ */
 static void
 create_integer(mj_t *atom, int64_t i)
 {
@@ -122,7 +130,9 @@ create_integer(mj_t *atom, int64_t i)
 	atom->value.s = strnsave(number, (int)atom->c, MJ_HUMAN);
 }
 
-/* create a string */
+/*
+ * Create a string.
+ */
 static void
 create_string(mj_t *atom, const char *s, ssize_t len)
 {
@@ -138,7 +148,9 @@ create_string(mj_t *atom, const char *s, ssize_t len)
 #define MJ_COLON		(MJ_CLOSE_BRACE + 1)	/* 12 */
 #define MJ_COMMA		(MJ_COLON + 1)		/* 13 */
 
-/* return the token type, and start and finish locations in string */
+/*
+ * Return the token type, and start and finish locations in string.
+ */
 static int
 gettok(const char *s, int *from, int *to, int *tok)
 {
@@ -173,7 +185,9 @@ gettok(const char *s, int *from, int *to, int *tok)
 	return *tok;
 }
 
-/* minor function used to indent a JSON field */
+/*
+ * Minor function used to indent a JSON field.
+ */
 static void
 indent(FILE *fp, unsigned int depth, const char *trailer)
 {
@@ -189,14 +203,18 @@ indent(FILE *fp, unsigned int depth, const char *trailer)
 
 /***************************************************************************/
 
-/* return the number of entries in the array */
+/*
+ * Return the number of entries in the array.
+ */
 int
 mj_arraycount(mj_t *atom)
 {
 	return atom->c;
 }
 
-/* create a new JSON node */
+/*
+ * Create a new JSON node.
+ */
 int
 mj_create(mj_t *atom, const char *type, ...)
 {
@@ -237,7 +255,9 @@ mj_create(mj_t *atom, const char *type, ...)
 	return 1;
 }
 
-/* put a JSON tree into a text string */
+/*
+ * Put a JSON tree into a text string.
+ */
 int
 mj_snprint(char *buf, size_t size, mj_t *atom, int encoded)
 {
@@ -313,7 +333,9 @@ mj_snprint(char *buf, size_t size, mj_t *atom, int encoded)
 	}
 }
 
-/* allocate and print the atom */
+/*
+ * Allocate and print the atom.
+ */
 int
 mj_asprint(char **buf, mj_t *atom, int encoded)
 {
@@ -326,7 +348,9 @@ mj_asprint(char **buf, mj_t *atom, int encoded)
 	return mj_snprint(*buf, (unsigned)(size + 1), atom, encoded) + 1;
 }
 
-/* read into a JSON tree from a string */
+/*
+ * Read into a JSON tree from a string.
+ */
 int
 mj_parse(mj_t *atom, const char *s, int *from, int *to, int *tok)
 {
@@ -373,14 +397,18 @@ mj_parse(mj_t *atom, const char *s, int *from, int *to, int *tok)
 	}
 }
 
-/* return the index of the item which corresponds to the name in the array */
+/*
+ * Return the index of the item which corresponds to the name in the array.
+ */
 int
 mj_object_find(mj_t *atom, const char *name, const unsigned from, const unsigned incr)
 {
 	return findentry(atom, name, from, incr);
 }
 
-/* find an atom in a composite mj JSON node */
+/*
+ * Find an atom in a composite mj JSON node.
+ */
 mj_t *
 mj_get_atom(mj_t *atom, ...)
 {
@@ -405,7 +433,9 @@ mj_get_atom(mj_t *atom, ...)
 	}
 }
 
-/* perform a deep copy on an mj JSON atom */
+/*
+ * Perform a deep copy on an mj JSON atom.
+ */
 int
 mj_deepcopy(mj_t *dst, mj_t *src)
 {
@@ -439,7 +469,9 @@ mj_deepcopy(mj_t *dst, mj_t *src)
 	}
 }
 
-/* do a deep delete on the object */
+/*
+ * Do a deep delete on the object.
+ */
 void
 mj_delete(mj_t *atom)
 {
@@ -462,7 +494,9 @@ mj_delete(mj_t *atom)
 	}
 }
 
-/* return the string size needed for the textual output of the JSON node */
+/*
+ * Return the string size needed for the textual output of the JSON node.
+ */
 int
 mj_string_size(mj_t *atom)
 {
@@ -501,7 +535,9 @@ mj_string_size(mj_t *atom)
 	}
 }
 
-/* create a new atom, and append it to the array or object */
+/*
+ * Create a new atom, and append it to the array or object.
+ */
 int
 mj_append(mj_t *atom, const char *type, ...)
 {
@@ -529,7 +565,9 @@ mj_append(mj_t *atom, const char *type, ...)
 	return 1;
 }
 
-/* append a field to an object */
+/*
+ * Append a field to an object.
+ */
 int
 mj_append_field(mj_t *atom, const char *name, const char *type, ...)
 {
@@ -558,7 +596,9 @@ mj_append_field(mj_t *atom, const char *name, const char *type, ...)
 	return 1;
 }
 
-/* make sure a JSON object is politically correct */
+/*
+ * Make sure a JSON object is politically correct.
+ */
 int
 mj_lint(mj_t *obj)
 {
@@ -600,7 +640,9 @@ mj_lint(mj_t *obj)
 	}
 }
 
-/* pretty-print a JSON struct - can be called recursively */
+/*
+ * Pretty-print a JSON struct. Can be called recursively.
+ */
 int
 mj_pretty(mj_t *mj, void *vp, unsigned depth, const char *trailer)
 {
@@ -642,7 +684,9 @@ mj_pretty(mj_t *mj, void *vp, unsigned depth, const char *trailer)
 	return 1;
 }
 
-/* show the contents of the simple atom as a string representation */
+/*
+ * Show the contents of the simple atom as a string representation.
+ */
 const char *
 mj_string_rep(mj_t *atom)
 {
