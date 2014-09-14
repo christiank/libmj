@@ -72,8 +72,8 @@ int mj_lint(mj_t *atom);
 /* Textual output. */
 int mj_snprint(char *buf, size_t size, mj_t *atom, int encoded);
 int mj_asprint(char **bufp, mj_t *atom, int encoded);
-int mj_string_size(mj_t *atom);
+int mj_string_size(const mj_t *atom);
 int mj_pretty(mj_t *atom, void *fp, unsigned depth, const char *trailer);
-const char *mj_string_rep(mj_t *atom);
+const char *mj_string_rep(const mj_t *atom);
 
 #endif /* MJ_H_ */

@@ -498,7 +498,7 @@ mj_delete(mj_t *atom)
  * Return the string size needed for the textual output of the JSON node.
  */
 int
-mj_string_size(mj_t *atom)
+mj_string_size(const mj_t *atom)
 {
 	unsigned	i;
 	int		cc;
@@ -688,7 +688,7 @@ mj_pretty(mj_t *mj, void *vp, unsigned depth, const char *trailer)
  * Show the contents of the simple atom as a string representation.
  */
 const char *
-mj_string_rep(mj_t *atom)
+mj_string_rep(const mj_t *atom)
 {
 	if (atom == NULL) {
 		return 0;
